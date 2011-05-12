@@ -8,7 +8,7 @@
     function getError(error) {
       return $('<span id="'+error.id+'" class="unhappyMessage">'+error.message+'</span>');
     }
-    function handleSubmit() {
+    function handleSubmit(event) {
       var errors = false, i, l;
       for (i = 0, l = fields.length; i < l; i += 1) {
         if (!fields[i].testValid(true)) {
@@ -16,6 +16,8 @@
         }
       }
       if (errors) {
+        event.preventDefault();
+        event.stopPropagation();
         if (isFunction(config.unHappy)) config.unHappy();
         return false;
       } else if (config.testMode) {
